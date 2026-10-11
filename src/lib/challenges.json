@@ -1,0 +1,294 @@
+[
+  {
+    "day": 1,
+    "title": "A letter from the North Pole",
+    "concept": "SELECT",
+    "story": "The workshop doors creak open. Juniper hands you a ledger and a mug of cocoa. Before the busy season begins, get acquainted with the names tucked inside these tables.",
+    "tables": [
+      "toys",
+      "elves"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "The missing label",
+        "question": "A parcel has lost its label, but its toy ID is still legible. In the toys table, what is the name of the toy with id 7?",
+        "answerFormat": "The toy name, exactly as it appears in the ledger."
+      },
+      {
+        "part": 2,
+        "title": "Meet the wrapping crew",
+        "question": "A note says that elf 3 will help you wrap the parcel. In the elves table, what is the name of the elf with id 3?",
+        "answerFormat": "The elf’s name."
+      }
+    ]
+  },
+  {
+    "day": 2,
+    "title": "Handle with care",
+    "concept": "WHERE · AND",
+    "story": "The wrapping room is a delightful tangle of ribbon. Hazel needs a few special labels before the fragile parcels can be wrapped.",
+    "tables": [
+      "toys"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "A delicate melody",
+        "question": "Find the toy in the music category that is fragile (fragile = 1) and costs more than 20 price_coins. What is its name?",
+        "answerFormat": "One toy name."
+      },
+      {
+        "part": 2,
+        "title": "A little Christmas magic",
+        "question": "Find the toy in the magic category that is fragile and weighs less than 500 weight_grams. What is its name?",
+        "answerFormat": "One toy name."
+      }
+    ]
+  },
+  {
+    "day": 3,
+    "title": "Room on the sleigh",
+    "concept": "ORDER BY · LIMIT",
+    "story": "Felix is checking the sleigh’s balance. Every gram matters, and someone has to decide what gets loaded first.",
+    "tables": [
+      "toys",
+      "elves"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "The heaviest parcel",
+        "question": "Which toy has the greatest weight_grams? If weights tie, choose the smallest id. Submit its name.",
+        "answerFormat": "One toy name."
+      },
+      {
+        "part": 2,
+        "title": "An experienced guide",
+        "question": "Which elf has the earliest hire_year? If years tie, choose the smallest id. Submit their name.",
+        "answerFormat": "One elf name."
+      }
+    ]
+  },
+  {
+    "day": 4,
+    "title": "Taking stock",
+    "concept": "COUNT · SUM",
+    "story": "The inventory ledger needs a fresh tally. Clover pulls up a stool while you count what is already waiting on the shelves.",
+    "tables": [
+      "toys",
+      "inventory"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "Fragile cargo",
+        "question": "How many rows in toys have fragile = 1?",
+        "answerFormat": "A whole-number count of toys."
+      },
+      {
+        "part": 2,
+        "title": "Gifts on the shelves",
+        "question": "What is the sum of quantity across all rows in inventory?",
+        "answerFormat": "A whole-number total of units."
+      }
+    ]
+  },
+  {
+    "day": 5,
+    "title": "The nice-list desk",
+    "concept": "OR · BETWEEN",
+    "story": "Wren has a stack of letters from children across the valley. There are a few special delivery lists to prepare before lunch.",
+    "tables": [
+      "children"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "The extra-special list",
+        "question": "How many children have nice_score between 85 and 95, including both endpoints?",
+        "answerFormat": "A whole-number count of children."
+      },
+      {
+        "part": 2,
+        "title": "Two snowy destinations",
+        "question": "How many children are in region_id 1 or region_id 6, with nice_score at least 80?",
+        "answerFormat": "A whole-number count of children."
+      }
+    ]
+  },
+  {
+    "day": 6,
+    "title": "Every kind of wonder",
+    "concept": "GROUP BY",
+    "story": "The workshop makes wooden wonders, soft companions, and a little magic. Juniper wants to see how the shelves compare.",
+    "tables": [
+      "toys"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "The fullest category",
+        "question": "Which category contains the most rows in toys? If counts tie, choose the category first in alphabetical order.",
+        "answerFormat": "One category name."
+      },
+      {
+        "part": 2,
+        "title": "A weighty decision",
+        "question": "Which category has the greatest total weight_grams across its toy rows? If totals tie, choose the category first alphabetically.",
+        "answerFormat": "One category name."
+      }
+    ]
+  },
+  {
+    "day": 7,
+    "title": "The empty shelf",
+    "concept": "INNER JOIN",
+    "story": "A tiny bell rings whenever a shelf gets low. Today it has been ringing quite a lot. Put names to the inventory numbers so the crew knows what to make.",
+    "tables": [
+      "toys",
+      "inventory"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "First to restock",
+        "question": "Among inventory rows where quantity is less than reorder_level, which toy has the smallest quantity? If quantities tie, choose the smallest toy id.",
+        "answerFormat": "One toy name."
+      },
+      {
+        "part": 2,
+        "title": "Fragile reserves",
+        "question": "What is the total inventory quantity for toys where fragile = 1?",
+        "answerFormat": "A whole-number total of units."
+      }
+    ]
+  },
+  {
+    "day": 8,
+    "title": "Letters and little wishes",
+    "concept": "MULTIPLE JOINS",
+    "story": "Every letter has a child, every child has a home, and every wish has a toy. Follow those connections to help the post office plan the next delivery.",
+    "tables": [
+      "wishes",
+      "toys",
+      "children",
+      "regions"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "Cuddly companions",
+        "question": "What is the sum of wish quantity for toys in the plush category? Include every wish, regardless of shipping status.",
+        "answerFormat": "A whole-number total of requested units."
+      },
+      {
+        "part": 2,
+        "title": "Snowfall’s wish list",
+        "question": "What is the sum of wish quantity for children in the region named Snowfall Valley? Include every wish, regardless of shipping status.",
+        "answerFormat": "A whole-number total of requested units."
+      }
+    ]
+  },
+  {
+    "day": 9,
+    "title": "The busiest little elves",
+    "concept": "GROUP BY · HAVING",
+    "story": "The toy makers have been busy all week. Their production ledger records each batch, including batches still waiting for inspection.",
+    "tables": [
+      "production",
+      "elves",
+      "toys"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "A workshop champion",
+        "question": "Which elf has produced the greatest sum of quantity across all their production rows? Include unchecked batches. If totals tie, choose the smallest elf id.",
+        "answerFormat": "One elf name."
+      },
+      {
+        "part": 2,
+        "title": "Ready for wrapping",
+        "question": "Group quality_checked = 1 production rows by toy. Among toys with at least 50 total checked units, which toy has the smallest total? If totals tie, choose the smallest toy id. Submit the toy name.",
+        "answerFormat": "One toy name."
+      }
+    ]
+  },
+  {
+    "day": 10,
+    "title": "Addresses in the snow",
+    "concept": "NULL · LEFT JOIN",
+    "story": "Some letters arrived without a postcode, and some wishes have not reached the shipping desk at all. Help Wren find the gaps without losing anyone from the list.",
+    "tables": [
+      "children",
+      "wishes",
+      "shipments"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "Incomplete addresses",
+        "question": "How many children have a NULL postal_code?",
+        "answerFormat": "A whole-number count of children."
+      },
+      {
+        "part": 2,
+        "title": "Still at the workshop",
+        "question": "How many wishes have no corresponding row in shipments? Count wish rows, not quantity. A packed shipment still counts as a corresponding shipment.",
+        "answerFormat": "A whole-number count of wishes."
+      }
+    ]
+  },
+  {
+    "day": 11,
+    "title": "The midnight dispatch",
+    "concept": "DATES · JOINED TOTALS",
+    "story": "The lanterns are lit and the sleigh barn smells of pine. Felix checks the dispatch log before the final journey through the hills.",
+    "tables": [
+      "shipments",
+      "wishes",
+      "children",
+      "regions"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "The first dispatches",
+        "question": "How many shipments have shipped_on from 2025-12-01 through 2025-12-06, inclusive? NULL shipped_on values are not included.",
+        "answerFormat": "A whole-number count of shipments."
+      },
+      {
+        "part": 2,
+        "title": "Pinewood deliveries",
+        "question": "What is the sum of wish quantity for shipments with status delivered going to children in Pinewood Hills?",
+        "answerFormat": "A whole-number total of delivered units."
+      }
+    ]
+  },
+  {
+    "day": 12,
+    "title": "One last Christmas wish",
+    "concept": "SUBQUERIES · THE FINALE",
+    "story": "The sleigh is almost ready. The crew gathers around the final ledger, and the last two checks are yours. There is a place beside Santa with your name on it.",
+    "tables": [
+      "wishes",
+      "toys",
+      "shipments"
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "title": "Above the ordinary",
+        "question": "How many toys have price_coins strictly greater than the average price_coins of all toys?",
+        "answerFormat": "A whole-number count of toys."
+      },
+      {
+        "part": 2,
+        "title": "The final sleigh manifest",
+        "question": "For every wish that does not have a shipment with status delivered, total the weight still to deliver: wish quantity multiplied by toy weight_grams. Include packed, in_transit, and wishes with no shipment. What is the total weight in grams?",
+        "answerFormat": "A whole-number total in grams."
+      }
+    ]
+  }
+]

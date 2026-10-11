@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: advent
+      POSTGRES_PASSWORD: advent
+      POSTGRES_DB: advent_app
+    ports:
+      - "127.0.0.1:54329:5432"
+    volumes:
+      - advent_app_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U advent -d advent_app"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  mysql-workshop:
+    image: mysql:8.4
+    profiles: ["sql-test"]
+    environment:
+      MYSQL_ROOT_PASSWORD: workshop
+      MYSQL_DATABASE: workshop
+    ports:
+      - "127.0.0.1:53306:3306"
+volumes:
+  advent_app_data:

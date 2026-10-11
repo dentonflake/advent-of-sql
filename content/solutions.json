@@ -1,0 +1,122 @@
+[
+  {
+    "day": 1,
+    "part": 1,
+    "sql": "SELECT name FROM toys WHERE id = 7;"
+  },
+  {
+    "day": 1,
+    "part": 2,
+    "sql": "SELECT name FROM elves WHERE id = 3;"
+  },
+  {
+    "day": 2,
+    "part": 1,
+    "sql": "SELECT name FROM toys WHERE category = 'music' AND fragile = 1 AND price_coins > 20;"
+  },
+  {
+    "day": 2,
+    "part": 2,
+    "sql": "SELECT name FROM toys WHERE category = 'magic' AND fragile = 1 AND weight_grams < 500;"
+  },
+  {
+    "day": 3,
+    "part": 1,
+    "sql": "SELECT name FROM toys ORDER BY weight_grams DESC, id ASC LIMIT 1;"
+  },
+  {
+    "day": 3,
+    "part": 2,
+    "sql": "SELECT name FROM elves ORDER BY hire_year ASC, id ASC LIMIT 1;"
+  },
+  {
+    "day": 4,
+    "part": 1,
+    "sql": "SELECT COUNT(*) FROM toys WHERE fragile = 1;"
+  },
+  {
+    "day": 4,
+    "part": 2,
+    "sql": "SELECT SUM(quantity) FROM inventory;"
+  },
+  {
+    "day": 5,
+    "part": 1,
+    "sql": "SELECT COUNT(*) FROM children WHERE nice_score BETWEEN 85 AND 95;"
+  },
+  {
+    "day": 5,
+    "part": 2,
+    "sql": "SELECT COUNT(*) FROM children WHERE (region_id = 1 OR region_id = 6) AND nice_score >= 80;"
+  },
+  {
+    "day": 6,
+    "part": 1,
+    "sql": "SELECT category FROM toys GROUP BY category ORDER BY COUNT(*) DESC, category ASC LIMIT 1;"
+  },
+  {
+    "day": 6,
+    "part": 2,
+    "sql": "SELECT category FROM toys GROUP BY category ORDER BY SUM(weight_grams) DESC, category ASC LIMIT 1;"
+  },
+  {
+    "day": 7,
+    "part": 1,
+    "sql": "SELECT t.name FROM toys t JOIN inventory i ON i.toy_id = t.id WHERE i.quantity < i.reorder_level ORDER BY i.quantity ASC, t.id ASC LIMIT 1;"
+  },
+  {
+    "day": 7,
+    "part": 2,
+    "sql": "SELECT SUM(i.quantity) FROM inventory i JOIN toys t ON t.id = i.toy_id WHERE t.fragile = 1;"
+  },
+  {
+    "day": 8,
+    "part": 1,
+    "sql": "SELECT SUM(w.quantity) FROM wishes w JOIN toys t ON t.id = w.toy_id WHERE t.category = 'plush';"
+  },
+  {
+    "day": 8,
+    "part": 2,
+    "sql": "SELECT SUM(w.quantity) FROM wishes w JOIN children c ON c.id = w.child_id JOIN regions r ON r.id = c.region_id WHERE r.name = 'Snowfall Valley';"
+  },
+  {
+    "day": 9,
+    "part": 1,
+    "sql": "SELECT e.name FROM elves e JOIN production p ON p.elf_id = e.id GROUP BY e.id, e.name ORDER BY SUM(p.quantity) DESC, e.id ASC LIMIT 1;"
+  },
+  {
+    "day": 9,
+    "part": 2,
+    "sql": "SELECT t.name FROM toys t JOIN production p ON p.toy_id = t.id WHERE p.quality_checked = 1 GROUP BY t.id, t.name HAVING SUM(p.quantity) >= 50 ORDER BY SUM(p.quantity) ASC, t.id ASC LIMIT 1;"
+  },
+  {
+    "day": 10,
+    "part": 1,
+    "sql": "SELECT COUNT(*) FROM children WHERE postal_code IS NULL;"
+  },
+  {
+    "day": 10,
+    "part": 2,
+    "sql": "SELECT COUNT(*) FROM wishes w LEFT JOIN shipments s ON s.wish_id = w.id WHERE s.id IS NULL;"
+  },
+  {
+    "day": 11,
+    "part": 1,
+    "sql": "SELECT COUNT(*) FROM shipments WHERE shipped_on BETWEEN '2025-12-01' AND '2025-12-06';"
+  },
+  {
+    "day": 11,
+    "part": 2,
+    "sql": "SELECT SUM(w.quantity) FROM shipments s JOIN wishes w ON w.id = s.wish_id JOIN children c ON c.id = w.child_id JOIN regions r ON r.id = c.region_id WHERE s.status = 'delivered' AND r.name = 'Pinewood Hills';"
+  },
+  {
+    "day": 12,
+    "part": 1,
+    "sql": "SELECT COUNT(*) FROM toys WHERE price_coins > (SELECT AVG(price_coins) FROM toys);"
+  },
+  {
+    "day": 12,
+    "part": 2,
+    "sql": "SELECT SUM(w.quantity * t.weight_grams) FROM wishes w JOIN toys t ON t.id = w.toy_id WHERE NOT EXISTS (SELECT 1 FROM shipments s WHERE s.wish_id = w.id AND s.status = 'delivered');"
+  }
+]
