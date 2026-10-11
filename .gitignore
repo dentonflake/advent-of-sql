@@ -7,3 +7,4 @@ node_modules/
 output/
 coverage/
 .playwright-cli/
+next-env.d.ts
