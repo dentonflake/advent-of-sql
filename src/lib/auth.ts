@@ -24,6 +24,13 @@ function createAuth() {
     );
   return betterAuth({
     appName: "Advent of SQL",
+    advanced: {
+      ipAddress: {
+        ipAddressHeaders: process.env.VERCEL
+          ? ["x-vercel-forwarded-for"]
+          : ["x-real-ip"],
+      },
+    },
     baseURL: process.env.BETTER_AUTH_URL,
     secret: process.env.BETTER_AUTH_SECRET,
     database: prismaAdapter(db, { provider: "postgresql" }),

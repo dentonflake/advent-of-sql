@@ -13,7 +13,7 @@
   --muted: #657168;
   --line: #dedfd2;
   --cranberry: #a44335;
-  --gold: #b58b36;
+  --gold: #977126;
   --soft: #eef0e5;
   --serif: "Lora", Georgia, serif;
   --sans: "DM Sans", sans-serif;
@@ -1716,5 +1716,27 @@ summary {
   *:after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header .signout-control {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-footnote {
+    display: none;
+  }
+  .hero-wash {
+    background: linear-gradient(
+      180deg,
+      #f8f5ed 0%,
+      #f8f5edf9 28%,
+      #f8f5edc7 56%,
+      #f8f5ed50 70%,
+      transparent 90%
+    );
   }
 }

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Header, Footer } from "@/components/shell";
+import { SignOut } from "@/components/sign-out";
 import { DeleteAccount } from "@/components/delete-account";
 import { getLearner } from "@/lib/learner";
 import { dialectLabels } from "@/lib/dialects";
@@ -29,6 +30,7 @@ export default async function Account() {
             </Link>
           </dd>
         </dl>
+        {!learner.localPreview && <SignOut />}
         <DeleteAccount localPreview={learner.localPreview} />
       </main>
       <Footer />

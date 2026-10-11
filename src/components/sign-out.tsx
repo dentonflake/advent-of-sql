@@ -5,7 +5,7 @@ export function SignOut() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   return (
-    <span>
+    <span className="signout-control">
       <button
         className="text-button"
         disabled={busy}

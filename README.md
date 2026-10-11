@@ -61,6 +61,7 @@ Email links expire after ten minutes. Sign-in errors offer a new attempt; sessio
 ```sh
 npm test
 npm run typecheck
+npm run test:auth # Requires a local test app database and auth config
 npm run build
 npm audit
 ```
@@ -87,7 +88,7 @@ npm start
 npm run test:integration
 ```
 
-This creates disposable accounts and signed sessions, verifies every unlock, all 24 correct answers, wrong answers, duplicate submissions, account isolation, two-device persistence, preferences, rate limits, and account deletion, then removes the test accounts. It does not send emails or contact Google. Live OAuth and email delivery require your service credentials and a separate launch smoke test.
+This creates disposable accounts and signed sessions, verifies every unlock, all 24 correct answers, wrong answers, duplicate submissions, account isolation, two-device persistence, preferences, rate limits, and account deletion, then removes the test accounts. It does not send emails or contact Google. The separate `test:auth` check exercises the actual email sign-in factory with outbound delivery captured in memory: signup, session creation, hashed tokens, one-time use, and expiry. Live OAuth and actual email delivery require your service credentials and a separate launch smoke test.
 
 ## Editing puzzles and data
 

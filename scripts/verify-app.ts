@@ -16,7 +16,8 @@ const other = `verify-${randomUUID()}`;
 const token = randomUUID();
 const secret = process.env.BETTER_AUTH_SECRET;
 if (!secret) throw new Error("Set BETTER_AUTH_SECRET");
-const cookie = `better-auth.session_token=${encodeURIComponent(`${token}.${createHmac("sha256", secret).update(token).digest("base64")}`)}`;
+const signingSecret = secret;
+const cookie = `better-auth.session_token=${encodeURIComponent(`${token}.${createHmac("sha256", signingSecret).update(token).digest("base64")}`)}`;
 async function post(
   path: string,
   body: unknown,
@@ -149,7 +150,7 @@ async function main() {
         expiresAt: new Date(Date.now() + 3600_000),
       },
     });
-    const freshCookie = `better-auth.session_token=${encodeURIComponent(`${freshToken}.${createHmac("sha256", secret).update(freshToken).digest("base64")}`)}`;
+    const freshCookie = `better-auth.session_token=${encodeURIComponent(`${freshToken}.${createHmac("sha256", signingSecret).update(freshToken).digest("base64")}`)}`;
     const secondDevice = await fetch(`${origin}/workshop`, {
       headers: { cookie: freshCookie },
     });
@@ -164,7 +165,7 @@ async function main() {
         expiresAt: new Date(Date.now() + 3600_000),
       },
     });
-    const otherCookie = `better-auth.session_token=${encodeURIComponent(`${otherToken}.${createHmac("sha256", secret).update(otherToken).digest("base64")}`)}`;
+    const otherCookie = `better-auth.session_token=${encodeURIComponent(`${otherToken}.${createHmac("sha256", signingSecret).update(otherToken).digest("base64")}`)}`;
     await db.submission.createMany({
       data: Array.from({ length: 12 }, () => ({ userId: other })),
     });

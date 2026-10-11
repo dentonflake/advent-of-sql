@@ -40,6 +40,7 @@ jobs:
       - run: npm run db:migrate
       - run: npm test
       - run: npm run typecheck
+      - run: npm run test:auth
       - name: PostgreSQL puzzles
         run: |
           PGPASSWORD=advent createdb -h localhost -U advent workshop_verify

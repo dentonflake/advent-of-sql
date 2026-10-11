@@ -25,6 +25,8 @@ Apply the committed migration to your production database with `npm run db:migra
 
 Set Google’s authorized redirect URI to `https://YOUR_DOMAIN/api/auth/callback/google`. Update both Google’s configuration and `BETTER_AUTH_URL` when changing domains. Use the exact origin when testing submissions; mismatched origins are rejected.
 
+Vercel's trusted client-IP header is used automatically for authentication rate limits. For other hosts, put the app behind a reverse proxy that overwrites `x-real-ip` with the actual client address; do not forward a visitor-supplied value. Answer submission limits are tied to authenticated account IDs and work independently of proxy headers.
+
 ## Launch verification
 
 1. Download each dialect’s script and run it in an empty database. Confirm the toy table has 18 rows.
