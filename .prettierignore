@@ -2,5 +2,5 @@ node_modules
 .next
 output
 .playwright-cli
-package-lock.json
+pnpm-lock.yaml
 public/downloads

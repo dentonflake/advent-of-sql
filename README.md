@@ -21,10 +21,10 @@ The account database is separate from the workshop database. Players never give 
 
 ## Run locally
 
-Use Node.js 22.12+ (Node 24 LTS recommended), npm, and PostgreSQL. Docker Compose provides an optional local PostgreSQL server.
+Use Node.js 22.12+ (Node 24 LTS recommended), pnpm, and PostgreSQL. Docker Compose provides an optional local PostgreSQL server.
 
 ```sh
-npm ci
+pnpm install --frozen-lockfile
 cp .env.example .env.local
 # Set BETTER_AUTH_SECRET to a random value of at least 32 characters.
 # Example generator: node -e 'console.log(require("crypto").randomBytes(32).toString("hex"))'
@@ -34,15 +34,15 @@ docker compose up -d postgres
 Prisma CLI reads `.env`, while Next.js reads `.env.local`. Put the same `DATABASE_URL` in `.env`, or export it in your shell:
 
 ```sh
-DATABASE_URL="postgresql://advent:advent@localhost:54329/advent_app" npm run db:migrate
-npm run dev
+DATABASE_URL="postgresql://advent:advent@localhost:54329/advent_app" pnpm db:migrate
+pnpm dev
 ```
 
 Open **http://localhost:3000**. For an existing PostgreSQL installation, replace `DATABASE_URL` with your own **dedicated app database**. The Docker credentials are for local development only.
 
 ### Local preview without Google or email credentials
 
-Set `LOCAL_PREVIEW="true"` in `.env.local` and run `npm run dev`. A local preview learner is created in the app database, and all puzzle interactions work. This is explicitly labeled in the navigation.
+Set `LOCAL_PREVIEW="true"` in `.env.local` and run `pnpm dev`. A local preview learner is created in the app database, and all puzzle interactions work. This is explicitly labeled in the navigation.
 
 Preview mode works **only in development and only on localhost or 127.0.0.1**. Production builds ignore it. Switch it off to test real authentication. Never use the preview learner as a public account.
 
@@ -59,20 +59,20 @@ Email links expire after ten minutes. Sign-in errors offer a new attempt; sessio
 ## Checks
 
 ```sh
-npm test
-npm run typecheck
-npm run test:auth # Requires a local test app database and auth config
-npm run build
-npm audit
+pnpm test
+pnpm typecheck
+pnpm test:auth # Requires a local test app database and auth config
+pnpm build
+pnpm audit
 ```
 
 To verify SQL downloads, use fresh disposable databases. The verification command loads the setup script once, then checks all 24 reference queries. It intentionally fails if the workshop tables already exist.
 
 ```sh
-npm run sql:verify -- sqlite
-WORKSHOP_DATABASE_URL="postgresql://USER:PASSWORD@HOST/NEW_TEST_DATABASE" npm run sql:verify -- postgresql
+pnpm sql:verify sqlite
+WORKSHOP_DATABASE_URL="postgresql://USER:PASSWORD@HOST/NEW_TEST_DATABASE" pnpm sql:verify postgresql
 # MYSQL_PWD may be supplied via a secure environment; don't put passwords in command arguments.
-WORKSHOP_MYSQL_DATABASE=NEW_TEST_DATABASE WORKSHOP_MYSQL_PORT=53306 npm run sql:verify -- mysql
+WORKSHOP_MYSQL_DATABASE=NEW_TEST_DATABASE WORKSHOP_MYSQL_PORT=53306 pnpm sql:verify mysql
 ```
 
 For MySQL also set `WORKSHOP_MYSQL_HOST` and `WORKSHOP_MYSQL_USER` if needed. `docker compose --profile sql-test up -d` provides the optional MySQL test service.
@@ -82,10 +82,10 @@ For MySQL also set `WORKSHOP_MYSQL_HOST` and `WORKSHOP_MYSQL_USER` if needed. `d
 Start the production app against your **local test app database**, with real local `BETTER_AUTH_URL` and `BETTER_AUTH_SECRET` values:
 
 ```sh
-npm run build
-npm start
+pnpm build
+pnpm start
 # In another terminal, using the same configuration:
-npm run test:integration
+pnpm test:integration
 ```
 
 This creates disposable accounts and signed sessions, verifies every unlock, all 24 correct answers, wrong answers, duplicate submissions, account isolation, two-device persistence, preferences, rate limits, and account deletion, then removes the test accounts. It does not send emails or contact Google. The separate `test:auth` check exercises the actual email sign-in factory with outbound delivery captured in memory: signup, session creation, hashed tokens, one-time use, and expiry. Live OAuth and actual email delivery require your service credentials and a separate launch smoke test.
@@ -101,8 +101,8 @@ This creates disposable accounts and signed sessions, verifies every unlock, all
 After changing the dataset or reference queries:
 
 ```sh
-npm run sql:generate
-npm test
+pnpm sql:generate
+pnpm test
 ```
 
 Run the server-based SQL checks again in **new** databases. Commit regenerated downloads and answers together. A shipped edition’s data and answers should remain stable; add a new edition rather than silently changing an active one.

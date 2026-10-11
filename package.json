@@ -39,7 +39,17 @@
     "tsx": "^4.20.0",
     "typescript": "^5.9.0"
   },
-  "overrides": {
-    "deepmerge-ts": "^8.0.0"
+  "packageManager": "pnpm@10.15.1",
+  "pnpm": {
+    "overrides": {
+      "deepmerge-ts": "^8.0.0"
+    },
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma",
+      "esbuild",
+      "sharp"
+    ]
   }
 }

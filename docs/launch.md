@@ -6,7 +6,7 @@ Provision a dedicated PostgreSQL account database with a connection limit suitab
 
 ## Vercel
 
-Import this repository as a Next.js project. Use `npm run build` as the build command. Configure these environment variables for the relevant deployment environment:
+Import this repository as a Next.js project. Use `pnpm build` as the build command. Configure these environment variables for the relevant deployment environment:
 
 | Variable               | Value                                                        |
 | ---------------------- | ------------------------------------------------------------ |
@@ -21,7 +21,7 @@ Import this repository as a Next.js project. Use `npm run build` as the build co
 
 Keep credentials out of Git. Use separate app databases and secrets for staging and production. Production preview mode is disabled regardless of the flag.
 
-Apply the committed migration to your production database with `npm run db:migrate` from a secure environment containing its `DATABASE_URL`, then deploy. The build generates Prisma Client but deliberately does not mutate production databases. For later releases, review migrations and apply them through a controlled release job before rollout.
+Apply the committed migration to your production database with `pnpm db:migrate` from a secure environment containing its `DATABASE_URL`, then deploy. The build generates Prisma Client but deliberately does not mutate production databases. For later releases, review migrations and apply them through a controlled release job before rollout.
 
 Set Google’s authorized redirect URI to `https://YOUR_DOMAIN/api/auth/callback/google`. Update both Google’s configuration and `BETTER_AUTH_URL` when changing domains. Use the exact origin when testing submissions; mismatched origins are rejected.
 
