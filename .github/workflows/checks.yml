@@ -1,0 +1,57 @@
+name: Project checks
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: advent
+          POSTGRES_PASSWORD: advent
+          POSTGRES_DB: advent_app
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U advent"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: workshop
+          MYSQL_DATABASE: workshop_verify
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost -pworkshop"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql://advent:advent@localhost:5432/advent_app
+      BETTER_AUTH_URL: http://localhost:3000
+      BETTER_AUTH_SECRET: local-ci-only-random-test-secret-not-for-production
+      LOCAL_PREVIEW: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: sudo apt-get update && sudo apt-get install -y sqlite3 postgresql-client default-mysql-client
+      - run: npm ci
+      - run: npm run db:generate
+      - run: npm run db:migrate
+      - run: npm test
+      - run: npm run typecheck
+      - name: PostgreSQL puzzles
+        run: |
+          PGPASSWORD=advent createdb -h localhost -U advent workshop_verify
+          WORKSHOP_DATABASE_URL=postgresql://advent:advent@localhost:5432/workshop_verify npm run sql:verify -- postgresql
+      - name: MySQL puzzles
+        run: MYSQL_PWD=workshop WORKSHOP_MYSQL_DATABASE=workshop_verify WORKSHOP_MYSQL_PORT=3306 npm run sql:verify -- mysql
+      - run: npm run build
+      - name: Production API integration
+        run: |
+          npm start > /tmp/advent-next.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://localhost:3000/ > /dev/null; then break; fi
+            sleep 1
+          done
+          npm run test:integration

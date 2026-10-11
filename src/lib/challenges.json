@@ -4,10 +4,7 @@
     "title": "A letter from the North Pole",
     "concept": "SELECT",
     "story": "The workshop doors creak open. Juniper hands you a ledger and a mug of cocoa. Before the busy season begins, get acquainted with the names tucked inside these tables.",
-    "tables": [
-      "toys",
-      "elves"
-    ],
+    "tables": ["toys", "elves"],
     "parts": [
       {
         "part": 1,
@@ -28,9 +25,7 @@
     "title": "Handle with care",
     "concept": "WHERE · AND",
     "story": "The wrapping room is a delightful tangle of ribbon. Hazel needs a few special labels before the fragile parcels can be wrapped.",
-    "tables": [
-      "toys"
-    ],
+    "tables": ["toys"],
     "parts": [
       {
         "part": 1,
@@ -51,10 +46,7 @@
     "title": "Room on the sleigh",
     "concept": "ORDER BY · LIMIT",
     "story": "Felix is checking the sleigh’s balance. Every gram matters, and someone has to decide what gets loaded first.",
-    "tables": [
-      "toys",
-      "elves"
-    ],
+    "tables": ["toys", "elves"],
     "parts": [
       {
         "part": 1,
@@ -75,10 +67,7 @@
     "title": "Taking stock",
     "concept": "COUNT · SUM",
     "story": "The inventory ledger needs a fresh tally. Clover pulls up a stool while you count what is already waiting on the shelves.",
-    "tables": [
-      "toys",
-      "inventory"
-    ],
+    "tables": ["toys", "inventory"],
     "parts": [
       {
         "part": 1,
@@ -99,9 +88,7 @@
     "title": "The nice-list desk",
     "concept": "OR · BETWEEN",
     "story": "Wren has a stack of letters from children across the valley. There are a few special delivery lists to prepare before lunch.",
-    "tables": [
-      "children"
-    ],
+    "tables": ["children"],
     "parts": [
       {
         "part": 1,
@@ -122,9 +109,7 @@
     "title": "Every kind of wonder",
     "concept": "GROUP BY",
     "story": "The workshop makes wooden wonders, soft companions, and a little magic. Juniper wants to see how the shelves compare.",
-    "tables": [
-      "toys"
-    ],
+    "tables": ["toys"],
     "parts": [
       {
         "part": 1,
@@ -145,10 +130,7 @@
     "title": "The empty shelf",
     "concept": "INNER JOIN",
     "story": "A tiny bell rings whenever a shelf gets low. Today it has been ringing quite a lot. Put names to the inventory numbers so the crew knows what to make.",
-    "tables": [
-      "toys",
-      "inventory"
-    ],
+    "tables": ["toys", "inventory"],
     "parts": [
       {
         "part": 1,
@@ -169,12 +151,7 @@
     "title": "Letters and little wishes",
     "concept": "MULTIPLE JOINS",
     "story": "Every letter has a child, every child has a home, and every wish has a toy. Follow those connections to help the post office plan the next delivery.",
-    "tables": [
-      "wishes",
-      "toys",
-      "children",
-      "regions"
-    ],
+    "tables": ["wishes", "toys", "children", "regions"],
     "parts": [
       {
         "part": 1,
@@ -195,11 +172,7 @@
     "title": "The busiest little elves",
     "concept": "GROUP BY · HAVING",
     "story": "The toy makers have been busy all week. Their production ledger records each batch, including batches still waiting for inspection.",
-    "tables": [
-      "production",
-      "elves",
-      "toys"
-    ],
+    "tables": ["production", "elves", "toys"],
     "parts": [
       {
         "part": 1,
@@ -220,11 +193,7 @@
     "title": "Addresses in the snow",
     "concept": "NULL · LEFT JOIN",
     "story": "Some letters arrived without a postcode, and some wishes have not reached the shipping desk at all. Help Wren find the gaps without losing anyone from the list.",
-    "tables": [
-      "children",
-      "wishes",
-      "shipments"
-    ],
+    "tables": ["children", "wishes", "shipments"],
     "parts": [
       {
         "part": 1,
@@ -245,12 +214,7 @@
     "title": "The midnight dispatch",
     "concept": "DATES · JOINED TOTALS",
     "story": "The lanterns are lit and the sleigh barn smells of pine. Felix checks the dispatch log before the final journey through the hills.",
-    "tables": [
-      "shipments",
-      "wishes",
-      "children",
-      "regions"
-    ],
+    "tables": ["shipments", "wishes", "children", "regions"],
     "parts": [
       {
         "part": 1,
@@ -271,11 +235,7 @@
     "title": "One last Christmas wish",
     "concept": "SUBQUERIES · THE FINALE",
     "story": "The sleigh is almost ready. The crew gathers around the final ledger, and the last two checks are yours. There is a place beside Santa with your name on it.",
-    "tables": [
-      "wishes",
-      "toys",
-      "shipments"
-    ],
+    "tables": ["wishes", "toys", "shipments"],
     "parts": [
       {
         "part": 1,

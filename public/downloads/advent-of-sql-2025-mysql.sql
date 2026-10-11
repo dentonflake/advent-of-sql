@@ -20,8 +20,9 @@ INSERT INTO departments (id, name, building) VALUES
 CREATE TABLE elves (
   id INTEGER PRIMARY KEY,
   name VARCHAR(80) NOT NULL,
-  department_id INTEGER NOT NULL REFERENCES departments(id),
-  hire_year INTEGER NOT NULL
+  department_id INTEGER NOT NULL,
+  hire_year INTEGER NOT NULL,
+  FOREIGN KEY (department_id) REFERENCES departments(id)
 ) ENGINE=InnoDB;
 
 INSERT INTO elves (id, name, department_id, hire_year) VALUES
@@ -84,9 +85,10 @@ INSERT INTO regions (id, name, route_code) VALUES
 CREATE TABLE children (
   id INTEGER PRIMARY KEY,
   name VARCHAR(80) NOT NULL,
-  region_id INTEGER NOT NULL REFERENCES regions(id),
+  region_id INTEGER NOT NULL,
   nice_score INTEGER NOT NULL,
-  postal_code VARCHAR(20)
+  postal_code VARCHAR(20),
+  FOREIGN KEY (region_id) REFERENCES regions(id)
 ) ENGINE=InnoDB;
 
 INSERT INTO children (id, name, region_id, nice_score, postal_code) VALUES
@@ -141,10 +143,12 @@ INSERT INTO children (id, name, region_id, nice_score, postal_code) VALUES
 
 CREATE TABLE wishes (
   id INTEGER PRIMARY KEY,
-  child_id INTEGER NOT NULL REFERENCES children(id),
-  toy_id INTEGER NOT NULL REFERENCES toys(id),
+  child_id INTEGER NOT NULL,
+  toy_id INTEGER NOT NULL,
   quantity INTEGER NOT NULL,
-  requested_on VARCHAR(10) NOT NULL
+  requested_on VARCHAR(10) NOT NULL,
+  FOREIGN KEY (child_id) REFERENCES children(id),
+  FOREIGN KEY (toy_id) REFERENCES toys(id)
 ) ENGINE=InnoDB;
 
 INSERT INTO wishes (id, child_id, toy_id, quantity, requested_on) VALUES
@@ -246,10 +250,11 @@ INSERT INTO wishes (id, child_id, toy_id, quantity, requested_on) VALUES
 (96, 48, 14, 1, '2025-11-13');
 
 CREATE TABLE inventory (
-  toy_id INTEGER PRIMARY KEY REFERENCES toys(id),
+  toy_id INTEGER PRIMARY KEY,
   quantity INTEGER NOT NULL,
   reorder_level INTEGER NOT NULL,
-  shelf VARCHAR(20) NOT NULL
+  shelf VARCHAR(20) NOT NULL,
+  FOREIGN KEY (toy_id) REFERENCES toys(id)
 ) ENGINE=InnoDB;
 
 INSERT INTO inventory (toy_id, quantity, reorder_level, shelf) VALUES
@@ -274,11 +279,13 @@ INSERT INTO inventory (toy_id, quantity, reorder_level, shelf) VALUES
 
 CREATE TABLE production (
   id INTEGER PRIMARY KEY,
-  elf_id INTEGER NOT NULL REFERENCES elves(id),
-  toy_id INTEGER NOT NULL REFERENCES toys(id),
+  elf_id INTEGER NOT NULL,
+  toy_id INTEGER NOT NULL,
   quantity INTEGER NOT NULL,
   produced_on VARCHAR(10) NOT NULL,
-  quality_checked INTEGER NOT NULL
+  quality_checked INTEGER NOT NULL,
+  FOREIGN KEY (elf_id) REFERENCES elves(id),
+  FOREIGN KEY (toy_id) REFERENCES toys(id)
 ) ENGINE=InnoDB;
 
 INSERT INTO production (id, elf_id, toy_id, quantity, produced_on, quality_checked) VALUES
@@ -321,10 +328,12 @@ INSERT INTO production (id, elf_id, toy_id, quantity, produced_on, quality_check
 
 CREATE TABLE shipments (
   id INTEGER PRIMARY KEY,
-  wish_id INTEGER NOT NULL UNIQUE REFERENCES wishes(id),
-  elf_id INTEGER NOT NULL REFERENCES elves(id),
+  wish_id INTEGER NOT NULL UNIQUE,
+  elf_id INTEGER NOT NULL,
   status VARCHAR(20) NOT NULL,
-  shipped_on VARCHAR(10)
+  shipped_on VARCHAR(10),
+  FOREIGN KEY (wish_id) REFERENCES wishes(id),
+  FOREIGN KEY (elf_id) REFERENCES elves(id)
 ) ENGINE=InnoDB;
 
 INSERT INTO shipments (id, wish_id, elf_id, status, shipped_on) VALUES

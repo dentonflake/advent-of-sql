@@ -1,10 +1,6 @@
 import workshop from "../../content/workshop.json";
-export const dialects = ["postgresql", "mysql", "sqlite"] as const;
-export type Dialect = typeof dialects[number];
-export function isDialect(value: unknown): value is Dialect {
-  return typeof value === "string" && dialects.includes(value as Dialect);
-}
-export const dialectLabels: Record<Dialect, string> = { postgresql: "PostgreSQL", mysql: "MySQL", sqlite: "SQLite" };
+import { dialectLabels, type Dialect } from "./dialects";
+export { dialects, dialectLabels, isDialect, type Dialect } from "./dialects";
 export const tables = workshop;
 export function generateSql(dialect: Dialect): string {
   const lines = [
@@ -19,10 +15,28 @@ export function generateSql(dialect: Dialect): string {
     ...(dialect !== "mysql" ? ["BEGIN;"] : []),
   ];
   for (const [name, table] of Object.entries(workshop)) {
-    const columns = Object.entries(table.columns).map(([column, type]) => `  ${column} ${type}`);
-    lines.push(`CREATE TABLE ${name} (\n${columns.join(",\n")}\n)${dialect === "mysql" ? " ENGINE=InnoDB" : ""};`, "");
-    const values = table.rows.map(row => `(${row.map(value => value === null ? "NULL" : typeof value === "number" ? value : `'${value.replaceAll("'", "''")}'`).join(", ")})`);
-    lines.push(`INSERT INTO ${name} (${Object.keys(table.columns).join(", ")}) VALUES\n${values.join(",\n")};`, "");
+    const foreignKeys: string[] = [];
+    const columns = Object.entries(table.columns).map(([column, type]) => {
+      if (dialect === "mysql" && type.includes(" REFERENCES ")) {
+        const [definition, reference] = type.split(" REFERENCES ");
+        foreignKeys.push(`  FOREIGN KEY (${column}) REFERENCES ${reference}`);
+        return `  ${column} ${definition}`;
+      }
+      return `  ${column} ${type}`;
+    });
+    columns.push(...foreignKeys);
+    lines.push(
+      `CREATE TABLE ${name} (\n${columns.join(",\n")}\n)${dialect === "mysql" ? " ENGINE=InnoDB" : ""};`,
+      "",
+    );
+    const values = table.rows.map(
+      (row) =>
+        `(${row.map((value) => (value === null ? "NULL" : typeof value === "number" ? value : `'${value.replaceAll("'", "''")}'`)).join(", ")})`,
+    );
+    lines.push(
+      `INSERT INTO ${name} (${Object.keys(table.columns).join(", ")}) VALUES\n${values.join(",\n")};`,
+      "",
+    );
   }
   if (dialect !== "mysql") lines.push("COMMIT;");
   lines.push("", "-- Ready! Start Day 1 at Advent of SQL.", "");
