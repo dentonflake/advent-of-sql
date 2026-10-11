@@ -81,6 +81,16 @@ CREATE TABLE "Submission" (
     CONSTRAINT "Submission_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "RateLimit" (
+    "id" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "count" INTEGER NOT NULL,
+    "lastRequest" BIGINT NOT NULL,
+
+    CONSTRAINT "RateLimit_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -104,6 +114,9 @@ CREATE UNIQUE INDEX "Completion_userId_year_day_part_key" ON "Completion"("userI
 
 -- CreateIndex
 CREATE INDEX "Submission_userId_createdAt_idx" ON "Submission"("userId", "createdAt");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "RateLimit_key_key" ON "RateLimit"("key");
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

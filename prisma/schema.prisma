@@ -75,3 +75,10 @@ model Submission {
   createdAt DateTime @default(now())
   @@index([userId, createdAt])
 }
+
+model RateLimit {
+  id String @id @default(cuid())
+  key String @unique
+  count Int
+  lastRequest BigInt
+}
